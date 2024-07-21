@@ -115,7 +115,7 @@ h5, .h05, h6, .h06 {
 	margin-bottom: 1.2rem;
 }
 h1, .h01 {
-	font-size: 2.5rem;
+	font-size: 3.1rem;
 	line-height: 1.355;
 	letter-spacing: -.1rem;
 }
@@ -1327,7 +1327,7 @@ header .logo a {
 .intro-content h1 {
 	color: #FFFFFF;
 	font-family: "poppins-medium", sans-serif;
-	font-size: 8.4rem;
+	font-size: 7.5rem;
 	line-height: 1.071;
 	max-width: 900px;
 	margin-top: 0;

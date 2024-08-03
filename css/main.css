@@ -72,7 +72,7 @@ html, body {
 body {
 	background: #151515;
 	font-family: "lora-regular", serif;
-	font-size: 1.7rem;
+	font-size: 1.5rem;
 	line-height: 3rem;
 	color: #6e6e6e;
 }
@@ -1095,7 +1095,7 @@ header .row {
 }
 header .top-bar {
 	display: block;
-	background: #000000;
+	background: transparent;
 	min-width: 220px;
 	min-height: 66px;
 	position: absolute;
@@ -1327,7 +1327,7 @@ header .logo a {
 .intro-content h1 {
 	color: #FFFFFF;
 	font-family: "poppins-medium", sans-serif;
-	font-size: 7.5rem;
+	font-size: 7.0rem !important;
 	line-height: 1.071;
 	max-width: 900px;
 	margin-top: 0;
@@ -1426,7 +1426,7 @@ header .logo a {
  */
 @media only screen and (max-width:1024px) {
 	.intro-content h1 {
-		font-size: 7.6rem;
+		font-size: 7.0rem !important;
 	}
 	.intro-social {
 		font-size: 3rem;
@@ -1504,10 +1504,10 @@ header .logo a {
 	margin-left: -30px;
 }
 .intro-info img {
-	height: 9rem;
-	width: 9rem;
-	border-radius: 50%;
-	margin: .9rem 0 0 0;
+	height: 15rem;
+	width: 15rem;
+	border-radius: 100%;
+	margin: 1.5rem 0 0 0;
 	float: left;
 }
 .intro-info .lead {

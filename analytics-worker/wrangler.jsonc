@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-analytics",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-03",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://avishek04.github.io,http://localhost:3000,http://127.0.0.1:3000,http://127.0.0.1:4173",
+    "RAW_EVENT_RETENTION_DAYS": "30",
+    "MAX_EVENTS_PER_SESSION_PER_MINUTE": "120"
+  },
+  "d1_databases": [
+    {
+      "binding": "ANALYTICS_DB",
+      "database_name": "portfolio-analytics",
+      "database_id": "3bac2051-7e95-4039-9ae2-8c2e83a61a7e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "ANALYTICS_RATE_LIMITER",
+      "namespace_id": "2026100401",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    }
+  ],
+  "triggers": {
+    "crons": ["15 7 * * *"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}

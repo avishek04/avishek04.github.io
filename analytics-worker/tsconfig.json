@@ -1,0 +1,21 @@
+{
+  "d1_databases": [
+    {
+      "binding": "portfolio_analytics",
+      "database_name": "portfolio-analytics",
+      "database_id": "3bac2051-7e95-4039-9ae2-8c2e83a61a7e"
+    }
+  ],
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "types": ["@cloudflare/workers-types", "node"]
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
+}

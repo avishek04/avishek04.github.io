@@ -191,7 +191,9 @@ test("home narrative links to the organizations and professor it mentions", asyn
     "href",
     "https://healthcare.utah.edu/",
   );
-  await expect(page.getByRole("link", { name: "University of Utah" })).toHaveAttribute(
+  await expect(
+    page.getByRole("link", { name: "University of Utah", exact: true }),
+  ).toHaveAttribute(
     "href",
     "https://www.utah.edu/",
   );

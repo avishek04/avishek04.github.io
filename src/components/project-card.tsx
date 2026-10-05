@@ -11,7 +11,8 @@ type ProjectCardProps = {
 export function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <article
-      className={`project-card group grid gap-8 border-t border-[var(--line)] pt-8 sm:pt-10 ${project.image ? "lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start lg:gap-14" : ""}`}
+      id={toAnalyticsId(project.title)}
+      className={`project-card group grid scroll-mt-24 gap-8 border-t border-[var(--line)] pt-8 sm:pt-10 ${project.image ? "lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start lg:gap-14" : ""}`}
       data-track-section="project"
       data-track-id={toAnalyticsId(project.title)}
     >

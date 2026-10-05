@@ -3,6 +3,8 @@ import { ArrowUpRightIcon } from "@/components/icons";
 import { profile } from "@/content/portfolio";
 
 export function Footer() {
+  const emails = [profile.email, ...profile.additionalEmails];
+
   return (
     <footer className="mt-16 border-t border-[var(--line)] sm:mt-20">
       <div className="site-container py-10 sm:py-12">
@@ -15,9 +17,17 @@ export function Footer() {
             </Link>
           </div>
           <div className="md:text-right">
-            <a className="text-sm underline decoration-[var(--line-strong)] underline-offset-4 hover:text-[var(--accent)]" href={`mailto:${profile.email}`}>
-              {profile.email}
-            </a>
+            <div className="flex flex-col items-start gap-2 md:items-end">
+              {emails.map((email) => (
+                <a
+                  key={email}
+                  className="text-sm underline decoration-[var(--line-strong)] underline-offset-4 hover:text-[var(--accent)]"
+                  href={`mailto:${email}`}
+                >
+                  {email}
+                </a>
+              ))}
+            </div>
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 md:justify-end">
               {profile.socials.map((social) => (
                 <a key={social.label} href={social.href} target="_blank" rel="noreferrer" className="text-xs text-[var(--muted)] hover:text-[var(--ink)]">

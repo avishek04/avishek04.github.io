@@ -4,7 +4,8 @@ const routes = [
   { path: "/", heading: /Avishek Choudhury/i },
   { path: "/experience/", heading: /^Experience$/i },
   { path: "/education/", heading: /^Education$/i },
-  { path: "/projects/", heading: /Selected projects/i },
+  { path: "/skills/", heading: /^Skills$/i },
+  { path: "/projects/", heading: /^Projects$/i },
   { path: "/explore/", heading: /Outside of work/i },
   { path: "/contact/", heading: /Let’s connect/i },
 ];
@@ -47,6 +48,17 @@ test("contact actions expose email, copy feedback, and safe external links", asy
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/contact/");
   await expect(page.getByRole("link", { name: "Write an email" })).toHaveAttribute("href", /^mailto:/);
+  await expect(page.getByRole("link", { name: "choudhury.avishek96@gmail.com" })).toHaveAttribute(
+    "href",
+    "mailto:choudhury.avishek96@gmail.com",
+  );
+  await expect(page.getByRole("link", { name: "avishekchoudhury04@gmail.com" })).toHaveAttribute(
+    "href",
+    "mailto:avishekchoudhury04@gmail.com",
+  );
+  await expect(
+    page.getByRole("list", { name: "Social profiles" }).getByRole("link"),
+  ).toHaveText(["LinkedIn/in/avishekchoudhury", "GitHub@avishek04", "Medium@avishekchoudhury"]);
   await page.getByTestId("copy-email").click();
   await expect(page.getByTestId("copy-status")).toHaveText("Email copied");
 
@@ -56,6 +68,49 @@ test("contact actions expose email, copy feedback, and safe external links", asy
   for (let index = 0; index < count; index += 1) {
     await expect(externalLinks.nth(index)).toHaveAttribute("rel", /noreferrer/);
   }
+});
+
+test("footer appears only on the homepage", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("footer")).toBeVisible();
+
+  for (const path of ["/experience/", "/education/", "/skills/", "/projects/", "/explore/", "/contact/"]) {
+    await page.goto(path);
+    await expect(page.locator("footer")).toHaveCount(0);
+  }
+});
+
+test("skill bubbles reveal linked evidence and destination anchors exist", async ({ page }) => {
+  await page.goto("/skills/");
+  const skill = page.getByTestId("skill-bubble-distributed-systems");
+  const skillNodes = page.locator("[data-skill-node]");
+  await expect(skill).toBeVisible();
+  const positionsBefore = await skillNodes.evaluateAll((nodes) =>
+    nodes.map((node) => (node as HTMLElement).style.cssText),
+  );
+  await expect(skill).toHaveAttribute("aria-expanded", "false");
+  await skill.click();
+  await expect(skill).toHaveAttribute("aria-expanded", "true");
+  const positionsAfter = await skillNodes.evaluateAll((nodes) =>
+    nodes.map((node) => (node as HTMLElement).style.cssText),
+  );
+  expect(
+    positionsAfter.some(
+      (position, index) => index > 0 && position !== positionsBefore[index],
+    ),
+  ).toBe(true);
+
+  const evidence = page
+    .locator("#skill-evidence-distributed-systems")
+    .getByRole("link", { name: "Project: Replicated key-value store" });
+  await expect(evidence).toBeVisible();
+  await expect(evidence).toHaveAttribute(
+    "href",
+    "/projects/#replicated-key-value-store",
+  );
+
+  await page.goto("/projects/#replicated-key-value-store");
+  await expect(page.locator("#replicated-key-value-store")).toBeVisible();
 });
 
 test("contact page discloses analytics collection and privacy controls", async ({ page }) => {
@@ -70,7 +125,72 @@ test("contact page discloses analytics collection and privacy controls", async (
 
 test("resume is discoverable from the homepage", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: /Download résumé/i })).toBeVisible();
+  const resumeLink = page.getByRole("link", { name: /Download résumé/i });
+  await expect(resumeLink).toBeVisible();
+  await expect(resumeLink).toHaveAttribute(
+    "href",
+    "/documents/Avishek-Choudhury-Resume.pdf",
+  );
+  await expect(resumeLink).toHaveAttribute(
+    "download",
+    "Avishek-Choudhury-Resume.pdf",
+  );
+});
+
+test("explore content is organized into clear sections", async ({ page }) => {
+  await page.goto("/explore/");
+  await expect(page.getByRole("heading", { name: "Trips" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Blogs" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Interests" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "LoRA, an efficient approach to fine-tuning a Large Language Model",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: /LoRA adapter training and the merged model weights/i,
+    }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Read article" })).toHaveAttribute(
+    "href",
+    /medium\.com/,
+  );
+  await expect(page.getByRole("link", { name: "Try model" })).toHaveAttribute(
+    "href",
+    /huggingface\.co/,
+  );
+  await expect(page.getByRole("link", { name: "View code" })).toHaveAttribute(
+    "href",
+    /github\.com/,
+  );
+});
+
+test("education uses the requested degree and GPA wording", async ({ page }) => {
+  await page.goto("/education/");
+  await expect(page.getByText("With Specialization in AI")).toBeVisible();
+  await expect(page.getByText("GPA 3.0 / 4.0", { exact: true })).toBeVisible();
+  await expect(page.getByText(/converted from 7\.5 \/ 10/i)).toHaveCount(0);
+});
+
+test("home narrative links to the organizations and professor it mentions", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "University of Utah Health" })).toHaveAttribute(
+    "href",
+    "https://healthcare.utah.edu/",
+  );
+  await expect(page.getByRole("link", { name: "University of Utah" })).toHaveAttribute(
+    "href",
+    "https://www.utah.edu/",
+  );
+  await expect(page.getByRole("link", { name: "Professor Shandian Zhe" })).toHaveAttribute(
+    "href",
+    "https://users.cs.utah.edu/~zhe/",
+  );
+  await expect(page.getByRole("link", { name: "Accenture" })).toHaveAttribute(
+    "href",
+    "https://www.accenture.com/",
+  );
 });
 
 test("analytics markers identify experience entries, projects, and source links", async ({ page }) => {

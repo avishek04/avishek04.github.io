@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
-import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { profile } from "@/content/portfolio";
 import "./globals.css";
@@ -93,7 +92,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a href="#main-content" className="skip-link">Skip to content</a>
         <Header />
         <main id="main-content">{children}</main>
-        <Footer />
         <AnalyticsTracker />
       </body>
     </html>

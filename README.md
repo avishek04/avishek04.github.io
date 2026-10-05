@@ -15,12 +15,14 @@ Open `http://localhost:3000`.
 
 ## Editing content
 
-All biography, experience, education, project, Explore, contact, social, and SEO content lives in `src/content/portfolio.ts`. Optional fields are hidden automatically when omitted.
+All biography, experience, education, skill-map, project, Explore, contact, social, and SEO content lives in `src/content/portfolio.ts`. Optional fields are hidden automatically when omitted.
 
 - Experience and education sort by their date fields.
 - Projects sort by `priority`, then by `year` when available.
+- Skill bubbles are sized from linked evidence: experience counts 4, projects count 2, and coursework counts 1. Keep each evidence link pointed at an existing experience, education, or project anchor.
 - A verified current experience uses `current: true` to display “Present”; an item without an `endDate` or current confirmation displays only its verified start date.
 - Add Explore images under `public/images/explore/`, then set `image` and `imageAlt` on the matching item.
+- Replace `public/documents/Avishek-Choudhury-Resume.pdf` whenever the résumé changes; the Home and Contact download links use this file directly.
 
 Review `CONTENT_REVIEW.md` before publishing or using the site in applications.
 

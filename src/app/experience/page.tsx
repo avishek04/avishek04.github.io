@@ -15,16 +15,16 @@ export default function ExperiencePage() {
     <>
       <PageIntro
         eyebrow="Experience"
-        index="02 / 06"
+        index="02 / 07"
         title="Experience"
-        description="Healthcare engineering, enterprise software, applied AI research, and computer-science education. Listed newest first."
       />
       <section className="site-container mt-16 sm:mt-24">
         <ol className="space-y-20">
           {items.map((item, index) => (
             <li
               key={`${item.company}-${item.role}`}
-              className="timeline-item grid gap-8 lg:grid-cols-[0.38fr_1fr] lg:gap-16"
+              id={toAnalyticsId(`${item.company}-${item.role}`)}
+              className="timeline-item grid scroll-mt-24 gap-8 lg:grid-cols-[0.38fr_1fr] lg:gap-16"
               data-track-section="experience"
               data-track-id={toAnalyticsId(`${item.company}-${item.role}`)}
             >

@@ -6,7 +6,7 @@ The new site uses the public portfolio as a draft source. Before using it in app
 
 - [ ] Confirm that the University of Utah Health role still displays the correct current status before submitting applications.
 - [ ] Confirm that “Open to software engineering opportunities across the United States” reflects current availability and location preferences.
-- [ ] Confirm that the Google Drive résumé is current and its sharing permissions allow public downloads.
+- [ ] Confirm that `public/documents/Avishek-Choudhury-Resume.pdf` is the current résumé before each deployment.
 
 ## Work and project details
 
@@ -19,6 +19,7 @@ The new site uses the public portfolio as a draft source. Before using it in app
 
 - [ ] Confirm the portrait may be reused publicly.
 - [ ] Confirm ownership or reuse rights for each migrated project image.
+- [ ] Reconfirm that the locally bundled LoRA article image may remain published with the portfolio when the Medium post is updated.
 - [ ] Add original hiking, cooking, photography, and training images to `public/images/explore/`, then add their paths and meaningful alt text in `src/content/portfolio.ts`.
 - [ ] Replace the generated social-preview image if a personal branded image is preferred.
 

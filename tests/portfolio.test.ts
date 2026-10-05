@@ -1,8 +1,24 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { EducationItem, ExperienceItem, ProjectItem } from "../src/content/portfolio";
+import {
+  education,
+  experience,
+  projects,
+  skillMap,
+  type EducationItem,
+  type ExperienceItem,
+  type ProjectItem,
+  type SkillMapItem,
+} from "../src/content/portfolio";
 import { externalReferrerHostname } from "../src/lib/analytics";
 import { formatDateRange, sortEducation, sortExperience, sortProjects, toAnalyticsId } from "../src/lib/portfolio";
+import {
+  createSkillEvidenceLayout,
+  createSkillNetworkEdges,
+  createSkillNetworkLayout,
+  displaceSkillNetwork,
+} from "../src/lib/skill-network";
+import { skillBubbleSize, skillUsageScore } from "../src/lib/skills";
 
 test("projects sort by priority and then descending year", () => {
   const items: ProjectItem[] = [
@@ -47,6 +63,97 @@ test("analytics identifiers are stable and URL-safe", () => {
   assert.equal(
     toAnalyticsId("University of Utah Health — Software Engineer"),
     "university-of-utah-health-software-engineer",
+  );
+});
+
+test("skill usage scores weight experience above projects and coursework", () => {
+  const skill: SkillMapItem = {
+    id: "test-skill",
+    label: "Test skill",
+    category: "Test",
+    evidence: [
+      { kind: "Experience", title: "Role", href: "/experience/#role" },
+      { kind: "Project", title: "Project", href: "/projects/#project" },
+      { kind: "Course", title: "Course", href: "/education/#course" },
+    ],
+  };
+
+  assert.equal(skillUsageScore(skill), 7);
+});
+
+test("skill bubble size increases with documented usage", () => {
+  const smaller: SkillMapItem = {
+    id: "smaller",
+    label: "Smaller",
+    category: "Test",
+    evidence: [{ kind: "Course", title: "Course", href: "/education/#course" }],
+  };
+  const larger: SkillMapItem = {
+    id: "larger",
+    label: "Larger",
+    category: "Test",
+    evidence: [{ kind: "Experience", title: "Role", href: "/experience/#role" }],
+  };
+
+  assert.ok(skillBubbleSize(larger, 1, 4) > skillBubbleSize(smaller, 1, 4));
+});
+
+test("every skill evidence link points to a rendered portfolio anchor", () => {
+  const anchors = new Set([
+    ...experience.map(
+      (item) =>
+        `/experience/#${toAnalyticsId(`${item.company}-${item.role}`)}`,
+    ),
+    ...education.map(
+      (item) =>
+        `/education/#${toAnalyticsId(`${item.institution}-${item.degree}`)}`,
+    ),
+    ...projects.map((item) => `/projects/#${toAnalyticsId(item.title)}`),
+  ]);
+
+  for (const skill of skillMap) {
+    for (const evidence of skill.evidence) {
+      assert.ok(
+        anchors.has(evidence.href),
+        `${skill.label} points to missing anchor ${evidence.href}`,
+      );
+    }
+  }
+});
+
+test("skill network forms a connected mesh inside its stage", () => {
+  const { height, nodes } = createSkillNetworkLayout(skillMap, 1152);
+  const edges = createSkillNetworkEdges(nodes);
+
+  assert.equal(nodes.length, skillMap.length);
+  assert.equal(edges.length, (nodes.length * (nodes.length - 1)) / 2);
+  for (const node of nodes) {
+    assert.ok(node.x - node.radius >= 0);
+    assert.ok(node.x + node.radius <= 1152);
+    assert.ok(node.y - node.radius >= 0);
+    assert.ok(node.y + node.radius <= height);
+  }
+});
+
+test("expanded evidence displaces neighboring skill nodes", () => {
+  const width = 1152;
+  const { height, nodes } = createSkillNetworkLayout(skillMap, width);
+  const evidence = createSkillEvidenceLayout(
+    nodes[0],
+    skillMap[0].evidence.length,
+    width,
+    height,
+  );
+  const displaced = displaceSkillNetwork(nodes, 0, evidence, width, height);
+
+  assert.equal(displaced[0].x, nodes[0].x);
+  assert.equal(displaced[0].y, nodes[0].y);
+  assert.ok(
+    displaced.some(
+      (node, index) =>
+        index !== 0 &&
+        Math.hypot(node.x - nodes[index].x, node.y - nodes[index].y) > 1,
+    ),
   );
 });
 

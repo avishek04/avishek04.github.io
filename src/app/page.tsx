@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Footer } from "@/components/footer";
 import { ArrowRightIcon, ArrowUpRightIcon, DownloadIcon } from "@/components/icons";
 import { profile } from "@/content/portfolio";
 
@@ -39,17 +40,38 @@ export default function HomePage() {
           <div>
             <p className="eyebrow">Software Engineer</p>
             <h1 className="hero-title mt-4">Avishek Choudhury</h1>
-            <p className="mt-4 text-lg font-medium leading-7 text-[var(--ink)] sm:text-xl">{profile.headline}</p>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--muted)]">{profile.summary}</p>
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--muted)]">
-              <span className="font-semibold text-[var(--ink)]">Currently:</span> {profile.currentFocus}
-            </p>
+            <div className="mt-6 max-w-3xl space-y-5 text-[0.95rem] leading-7 text-[var(--muted)]">
+              {profile.homeNarrative.map((paragraph, paragraphIndex) => (
+                <p key={paragraphIndex}>
+                  {paragraph.map((segment, segmentIndex) =>
+                    segment.href ? (
+                      <a
+                        key={`${paragraphIndex}-${segmentIndex}`}
+                        href={segment.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border-b border-[var(--line-strong)] font-medium text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                      >
+                        {segment.text}
+                      </a>
+                    ) : (
+                      <span key={`${paragraphIndex}-${segmentIndex}`}>{segment.text}</span>
+                    ),
+                  )}
+                </p>
+              ))}
+            </div>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/projects/" className="button button--primary" data-analytics="hero-projects">
                 View projects <ArrowRightIcon className="size-4" />
               </Link>
               {profile.resumeUrl ? (
-                <a href={profile.resumeUrl} className="button button--secondary" target="_blank" rel="noreferrer" data-analytics="hero-resume">
+                <a
+                  href={profile.resumeUrl}
+                  className="button button--secondary"
+                  download="Avishek-Choudhury-Resume.pdf"
+                  data-analytics="hero-resume"
+                >
                   <DownloadIcon className="size-4" /> Download résumé
                 </a>
               ) : null}
@@ -119,6 +141,7 @@ export default function HomePage() {
           ))}
         </ol>
       </section>
+      <Footer />
     </>
   );
 }

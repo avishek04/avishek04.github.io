@@ -15,16 +15,20 @@ export type WorkPrinciple = {
   description: string;
 };
 
+export type NarrativeSegment = {
+  text: string;
+  href?: string;
+};
+
 export type SiteProfile = {
   name: string;
   shortName: string;
-  headline: string;
-  summary: string;
-  currentFocus: string;
+  homeNarrative: NarrativeSegment[][];
   biography: string[];
   location: string;
   availability: string;
   email: string;
+  additionalEmails: string[];
   siteUrl: string;
   resumeUrl?: string;
   portrait: string;
@@ -82,46 +86,98 @@ export type ProjectItem = {
   liveUrl?: string;
 };
 
+export type SkillEvidenceKind = "Experience" | "Project" | "Course";
+
+export type SkillEvidence = {
+  kind: SkillEvidenceKind;
+  title: string;
+  href: string;
+};
+
+export type SkillMapItem = {
+  id: string;
+  label: string;
+  category: string;
+  evidence: SkillEvidence[];
+};
+
 export type ExploreItem = {
   title: string;
+  section: "Trips" | "Blogs" | "Interests";
   category: string;
   description: string;
   image?: string;
   imageAlt?: string;
+  imageFit?: "cover" | "contain";
   date?: string;
-  link?: string;
+  links?: Array<{
+    label: string;
+    href: string;
+  }>;
 };
 
 export const profile: SiteProfile = {
   name: "Avishek Choudhury",
   shortName: "AC",
-  headline: "Software engineer building reliable systems with an intelligent edge.",
-  summary:
-    "My interests center on dependable backend services, end-to-end product development, distributed systems that remain resilient under failure, and applied AI grounded in careful evaluation. I enjoy bringing these areas together—designing clear APIs and data flows, building thoughtful user experiences, and using machine learning when it creates a measurable benefit.",
-  currentFocus:
-    "After completing my M.S. in Computing with an Artificial Intelligence specialization at the University of Utah, I’m currently building and refining projects in distributed systems and practical AI while pursuing software engineering opportunities.",
+  homeNarrative: [
+    [
+      { text: "I’m a Software Engineer at " },
+      {
+        text: "University of Utah Health",
+        href: "https://healthcare.utah.edu/",
+      },
+      {
+        text: ", where I build intelligent systems that help clinicians and researchers reach the information they need, support more informed decisions, and streamline workflows across one of the Mountain West’s leading academic health systems. I currently own three projects: an identity and session platform spanning 8+ distributed services; a RAG pipeline that maps entities and relationships across 1,000+ SQL tables using Qdrant vector search; and an LLM-based SQL platform that provides conversational access to large healthcare datasets. Together, these systems are designed to absorb traffic bursts of 2,000+ requests per second and have reduced clinical research effort by 20%.",
+      },
+    ],
+    [
+      { text: "Before this role, I completed an M.S. in Computing with a specialization in Artificial Intelligence at the " },
+      {
+        text: "University of Utah",
+        href: "https://www.utah.edu/",
+      },
+      { text: ". Working with " },
+      {
+        text: "Professor Shandian Zhe",
+        href: "https://users.cs.utah.edu/~zhe/",
+      },
+      {
+        text: ", I contributed to applied large-language-model research and open-sourced MedLam, a medical question-answering model that reached 5,000+ downloads on Hugging Face. As a teaching assistant for Operating Systems and Database Systems, I mentored more than 50 graduate students through code reviews, systems concepts, and difficult debugging problems. Coursework in distributed systems, graduate algorithms, machine learning, natural language processing, computer vision, and artificial intelligence gave me the theoretical foundation to complement the systems I enjoy building.",
+      },
+    ],
+    [
+      { text: "Earlier in my career, I spent nearly four years at " },
+      {
+        text: "Accenture",
+        href: "https://www.accenture.com/",
+      },
+      {
+        text: ", progressing from Associate Software Engineer to Senior Software Engineer. I built responsive product experiences, improved API response times by 30%, designed fault-tolerant messaging that processed 5,000+ events per second, and helped deliver a UK project expected to generate $1.2 million in revenue. That progression taught me how to move from solving an assigned problem to owning the outcome—understanding the business need, making the technical trade-offs clear, and carrying a system through delivery.",
+      },
+    ],
+  ],
   biography: [
-    "I’m a software engineer who enjoys turning ambiguous problems into dependable software. My path has taken me from enterprise product development at Accenture to graduate research and teaching at the University of Utah, with backend systems, full-stack products, and applied AI along the way.",
+    "I’m a software engineer who enjoys turning ambiguous problems into dependable software. My path has moved through enterprise product development, graduate research and teaching, and healthcare engineering, with backend systems, full-stack products, and applied AI along the way.",
     "I started as a self-taught programmer, and that beginner’s curiosity still shapes how I work. I like asking the simple questions, listening closely to the people who use a system, and finding the clearest path through a complicated problem.",
     "When I’m away from the keyboard, you’ll usually find me hiking around Utah, experimenting in the kitchen, taking photographs, or strength training. Those pursuits keep me observant, patient, and ready to learn something new.",
   ],
   location: "Salt Lake City, UT",
   availability: "Open to software engineering opportunities across the United States.",
   email: "choudhury.avishek96@gmail.com",
+  additionalEmails: ["avishekchoudhury04@gmail.com"],
   siteUrl: "https://avishek04.github.io",
-  resumeUrl:
-    "https://drive.google.com/uc?export=download&id=1vUuabHcxPeBJzrjsIotqNVORjvoLBsBX",
+  resumeUrl: "/documents/Avishek-Choudhury-Resume.pdf",
   portrait: "/images/profile.webp",
   socials: [
-    {
-      label: "GitHub",
-      handle: "@avishek04",
-      href: "https://github.com/avishek04",
-    },
     {
       label: "LinkedIn",
       handle: "/in/avishekchoudhury",
       href: "https://www.linkedin.com/in/avishekchoudhury",
+    },
+    {
+      label: "GitHub",
+      handle: "@avishek04",
+      href: "https://github.com/avishek04",
     },
     {
       label: "Medium",
@@ -199,7 +255,7 @@ export const experience: ExperienceItem[] = [
       "Scaled and secured a RAG platform with caching, rate limiting, and asynchronous queuing to absorb traffic bursts of 2,000+ requests per second.",
       "Reduced clinical research effort by 20% by building an LLM-based SQL platform that provides conversational access to large-scale healthcare datasets.",
     ],
-    technologies: ["C#", ".NET", "REST APIs", "Redis", "RabbitMQ", "Azure DevOps", "SQL", "NoSQL", "OpenAI API", "OIDC", "JWT", "React"],
+    technologies: ["C#", ".NET", "REST APIs", "Redis", "RabbitMQ", "Azure DevOps", "SQL", "NoSQL", "Qdrant", "OpenAI API", "OIDC", "JWT", "React"],
   },
   {
     company: "University of Utah",
@@ -212,7 +268,7 @@ export const experience: ExperienceItem[] = [
       "Mentored 50+ M.S. students in Operating Systems and Database Systems, providing technical guidance, reviewing code, and resolving complex issues.",
       "Open-sourced a medical question-answering LLM that reached 5,000+ downloads on Hugging Face after fine-tuning Meta's Llama with LoRA and PEFT.",
     ],
-    technologies: ["Operating Systems", "Database Systems", "C++", "C#", "Python", "PyTorch", "Machine Learning"],
+    technologies: ["Operating Systems", "Database Systems", "C++", "C#", "Python", "PyTorch", "Machine Learning", "LLMs"],
   },
   {
     company: "University of Utah",
@@ -268,7 +324,7 @@ export const education: EducationItem[] = [
   {
     institution: "University of Utah",
     degree: "M.S. in Computing",
-    focus: "Artificial Intelligence track",
+    focus: "With Specialization in AI",
     startDate: "2023-08",
     endDate: "2025-04",
     location: "Salt Lake City, Utah",
@@ -308,7 +364,376 @@ export const education: EducationItem[] = [
     startDate: "2014-08",
     endDate: "2018-04",
     location: "Bengaluru, India",
-    gpa: "3.0 / 4.0 (converted from 7.5 / 10)",
+    gpa: "3.0 / 4.0",
+  },
+];
+
+export const skillMap: SkillMapItem[] = [
+  {
+    id: "distributed-systems",
+    label: "Distributed systems",
+    category: "Systems",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth engineering",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture messaging",
+        href: "/experience/#accenture-senior-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "Replicated key-value store",
+        href: "/projects/#replicated-key-value-store",
+      },
+      {
+        kind: "Project",
+        title: "Real-time chat server",
+        href: "/projects/#real-time-group-chat-server",
+      },
+      {
+        kind: "Course",
+        title: "Distributed Systems",
+        href: "/education/#university-of-utah-m-s-in-computing",
+      },
+    ],
+  },
+  {
+    id: "csharp-dotnet",
+    label: "C# & .NET",
+    category: "Backend",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth engineering",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture senior role",
+        href: "/experience/#accenture-senior-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture software role",
+        href: "/experience/#accenture-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "COVID-19 Information Hub",
+        href: "/projects/#covid-19-information-hub",
+      },
+      {
+        kind: "Course",
+        title: "Software development",
+        href: "/education/#university-of-utah-master-of-software-development",
+      },
+    ],
+  },
+  {
+    id: "applied-ai-llms",
+    label: "Applied AI & LLMs",
+    category: "Artificial intelligence",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth AI systems",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "LLM research",
+        href: "/experience/#university-of-utah-teaching-assistant-and-researcher",
+      },
+      {
+        kind: "Project",
+        title: "MedLam",
+        href: "/projects/#medlam",
+      },
+      {
+        kind: "Project",
+        title: "Trajectory Generation BERT",
+        href: "/projects/#trajectory-generation-bert",
+      },
+      {
+        kind: "Course",
+        title: "AI specialization",
+        href: "/education/#university-of-utah-m-s-in-computing",
+      },
+    ],
+  },
+  {
+    id: "python",
+    label: "Python",
+    category: "Language",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "LLM research",
+        href: "/experience/#university-of-utah-teaching-assistant-and-researcher",
+      },
+      {
+        kind: "Experience",
+        title: "Software development internship",
+        href: "/experience/#university-of-utah-software-development-intern",
+      },
+      { kind: "Project", title: "MedLam", href: "/projects/#medlam" },
+      {
+        kind: "Project",
+        title: "Trajectory Generation BERT",
+        href: "/projects/#trajectory-generation-bert",
+      },
+      {
+        kind: "Project",
+        title: "Machine-learning library",
+        href: "/projects/#machine-learning-library",
+      },
+    ],
+  },
+  {
+    id: "sql-data",
+    label: "SQL & data",
+    category: "Data",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth data systems",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Database Systems teaching",
+        href: "/experience/#university-of-utah-teaching-assistant-and-researcher",
+      },
+      {
+        kind: "Experience",
+        title: "Recommendation systems",
+        href: "/experience/#university-of-utah-software-development-intern",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture data access",
+        href: "/experience/#accenture-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "COVID-19 Information Hub",
+        href: "/projects/#covid-19-information-hub",
+      },
+    ],
+  },
+  {
+    id: "rest-apis",
+    label: "REST APIs",
+    category: "Backend",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth services",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture senior role",
+        href: "/experience/#accenture-senior-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture software role",
+        href: "/experience/#accenture-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture associate role",
+        href: "/experience/#accenture-associate-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "COVID-19 Information Hub",
+        href: "/projects/#covid-19-information-hub",
+      },
+    ],
+  },
+  {
+    id: "messaging-queues",
+    label: "Messaging & queues",
+    category: "Systems",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth queuing",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture messaging",
+        href: "/experience/#accenture-senior-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "Real-time chat server",
+        href: "/projects/#real-time-group-chat-server",
+      },
+    ],
+  },
+  {
+    id: "redis-caching",
+    label: "Redis & caching",
+    category: "Performance",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth platform caching",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture API caching",
+        href: "/experience/#accenture-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "Caching DNS resolver",
+        href: "/projects/#caching-dns-resolver",
+      },
+    ],
+  },
+  {
+    id: "pytorch",
+    label: "PyTorch",
+    category: "Machine learning",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "LLM research",
+        href: "/experience/#university-of-utah-teaching-assistant-and-researcher",
+      },
+      {
+        kind: "Experience",
+        title: "Software development internship",
+        href: "/experience/#university-of-utah-software-development-intern",
+      },
+      { kind: "Project", title: "MedLam", href: "/projects/#medlam" },
+      {
+        kind: "Project",
+        title: "Trajectory Generation BERT",
+        href: "/projects/#trajectory-generation-bert",
+      },
+      {
+        kind: "Project",
+        title: "Machine-learning library",
+        href: "/projects/#machine-learning-library",
+      },
+    ],
+  },
+  {
+    id: "react-javascript",
+    label: "React & JavaScript",
+    category: "Frontend",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth product UI",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+      {
+        kind: "Experience",
+        title: "Accenture responsive UI",
+        href: "/experience/#accenture-associate-software-engineer",
+      },
+      {
+        kind: "Project",
+        title: "Face recognition web app",
+        href: "/projects/#face-recognition-web-app",
+      },
+      {
+        kind: "Project",
+        title: "COVID-19 Information Hub",
+        href: "/projects/#covid-19-information-hub",
+      },
+      {
+        kind: "Project",
+        title: "70 Years of Music",
+        href: "/projects/#70-years-of-music",
+      },
+    ],
+  },
+  {
+    id: "cpp-operating-systems",
+    label: "C++ & operating systems",
+    category: "Systems",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "Operating Systems teaching",
+        href: "/experience/#university-of-utah-teaching-assistant-and-researcher",
+      },
+      { kind: "Project", title: "Unix shell", href: "/projects/#unix-shell" },
+      {
+        kind: "Project",
+        title: "MSD Script interpreter",
+        href: "/projects/#msd-script-interpreter",
+      },
+      {
+        kind: "Course",
+        title: "Operating Systems",
+        href: "/education/#university-of-utah-master-of-software-development",
+      },
+    ],
+  },
+  {
+    id: "java-networking",
+    label: "Java & networking",
+    category: "Backend",
+    evidence: [
+      {
+        kind: "Project",
+        title: "Real-time chat server",
+        href: "/projects/#real-time-group-chat-server",
+      },
+      {
+        kind: "Project",
+        title: "Caching DNS resolver",
+        href: "/projects/#caching-dns-resolver",
+      },
+      {
+        kind: "Course",
+        title: "Networks & Security",
+        href: "/education/#university-of-utah-master-of-software-development",
+      },
+    ],
+  },
+  {
+    id: "qdrant-vector-search",
+    label: "Qdrant & vector search",
+    category: "AI infrastructure",
+    evidence: [
+      {
+        kind: "Experience",
+        title: "UHealth RAG platform",
+        href: "/experience/#university-of-utah-health-software-engineer",
+      },
+    ],
+  },
+  {
+    id: "go-raft",
+    label: "Go & Raft",
+    category: "Distributed systems",
+    evidence: [
+      {
+        kind: "Project",
+        title: "Replicated key-value store",
+        href: "/projects/#replicated-key-value-store",
+      },
+      {
+        kind: "Course",
+        title: "Distributed Systems",
+        href: "/education/#university-of-utah-m-s-in-computing",
+      },
+    ],
   },
 ];
 
@@ -453,26 +878,73 @@ export const projects: ProjectItem[] = [
 export const explore: ExploreItem[] = [
   {
     title: "Finding the long way up",
+    section: "Trips",
     category: "Hiking",
     description:
       "Time on a trail is how I reset perspective: one steady step, fewer distractions, and a wider view of the problem than I had at the start.",
   },
   {
+    title: "LoRA, an efficient approach to fine-tuning a Large Language Model",
+    section: "Blogs",
+    category: "Large language models",
+    description:
+      "A practical explanation of why parameter-efficient fine-tuning matters, how Low-Rank Adaptation updates a small set of trainable weights, and how I applied it while building the MedLam medical question-answering model.",
+    image: "/images/explore/lora-fine-tuning.png",
+    imageAlt: "Diagram showing LoRA adapter training and the merged model weights after training",
+    imageFit: "contain",
+    date: "Apr 4, 2025",
+    links: [
+      {
+        label: "Read article",
+        href: "https://medium.com/@avishekchoudhury/lora-an-efficient-approach-to-fine-tuning-large-language-model-5daad56f7000",
+      },
+      {
+        label: "Try model",
+        href: "https://huggingface.co/aviici4cs/MedLam",
+      },
+      {
+        label: "View code",
+        href: "https://github.com/avishek04/MedLam",
+      },
+    ],
+  },
+  {
     title: "Cooking as iteration",
+    section: "Interests",
     category: "Cooking",
     description:
       "I enjoy the loop of learning a technique, tasting the result, and adjusting. It is creative work with immediate and honest feedback.",
   },
   {
     title: "Learning to notice",
+    section: "Interests",
     category: "Photography",
     description:
       "Photography is a practice in paying attention—to light, proportion, ordinary details, and the stories that appear when I slow down.",
   },
   {
     title: "The value of consistency",
+    section: "Interests",
     category: "Strength training",
     description:
       "Training keeps me grounded in patient, repeatable progress. Small improvements compound when the fundamentals stay sound.",
+  },
+];
+
+export const exploreSections: Array<{
+  title: ExploreItem["section"];
+  description: string;
+}> = [
+  {
+    title: "Trips",
+    description: "Trails, places, and journeys that help me slow down, notice more, and return with a wider perspective.",
+  },
+  {
+    title: "Blogs",
+    description: "Technical notes and reflections on software, systems, artificial intelligence, and the process of learning.",
+  },
+  {
+    title: "Interests",
+    description: "The practices outside engineering that keep me curious, patient, creative, and consistent.",
   },
 ];

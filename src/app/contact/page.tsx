@@ -11,11 +11,13 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const emails = [profile.email, ...profile.additionalEmails];
+
   return (
     <>
       <PageIntro
         eyebrow="Contact"
-        index="06 / 06"
+        index="07 / 07"
         title="Let’s connect"
         description="If you are hiring, building something ambitious, or want to compare notes on systems and applied AI, I would be glad to hear from you."
       />
@@ -23,9 +25,17 @@ export default function ContactPage() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-20">
           <div className="contact-panel min-w-0 bg-[var(--ink)] p-7 text-[var(--paper)] sm:p-10 lg:p-14">
             <p className="eyebrow !text-[color:var(--paper)]/55">Direct is best</p>
-            <a href={`mailto:${profile.email}`} className="mt-8 block break-all font-serif text-2xl leading-tight tracking-[-0.035em] hover:text-[#9ab7ff] sm:text-4xl xl:text-5xl">
-              {profile.email}
-            </a>
+            <div className="mt-8 space-y-4">
+              {emails.map((email, index) => (
+                <a
+                  key={email}
+                  href={`mailto:${email}`}
+                  className={`${index === 0 ? "text-2xl sm:text-4xl xl:text-5xl" : "text-xl sm:text-2xl"} block break-all font-serif leading-tight tracking-[-0.035em] hover:text-[#9ab7ff]`}
+                >
+                  {email}
+                </a>
+              ))}
+            </div>
             <p className="mt-7 max-w-xl text-sm leading-7 text-[color:var(--paper)]/65">{profile.availability}</p>
             <div className="mt-10 [&_.button--primary]:bg-[var(--paper)] [&_.button--primary]:text-[var(--ink)] [&_.button--secondary]:border-white/25 [&_.button--secondary]:text-[var(--paper)]">
               <ContactActions email={profile.email} />
@@ -35,7 +45,7 @@ export default function ContactPage() {
           <div className="flex flex-col justify-between gap-14">
             <div>
               <p className="eyebrow">Find me online</p>
-              <ul className="mt-6 border-t border-[var(--line)]">
+              <ul className="mt-6 border-t border-[var(--line)]" aria-label="Social profiles">
                 {profile.socials.map((social) => (
                   <li key={social.label} className="border-b border-[var(--line)]">
                     <a href={social.href} target="_blank" rel="noreferrer" className="group flex items-center justify-between gap-6 py-5" data-analytics={`contact-${social.label.toLowerCase()}`}>
@@ -58,7 +68,12 @@ export default function ContactPage() {
               {profile.resumeUrl ? (
                 <div>
                   <p className="eyebrow">Background</p>
-                  <a href={profile.resumeUrl} target="_blank" rel="noreferrer" className="text-link mt-3" data-analytics="contact-resume">
+                  <a
+                    href={profile.resumeUrl}
+                    className="text-link mt-3"
+                    download="Avishek-Choudhury-Resume.pdf"
+                    data-analytics="contact-resume"
+                  >
                     Résumé <DownloadIcon className="size-4" />
                   </a>
                 </div>

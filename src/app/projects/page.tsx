@@ -16,9 +16,8 @@ export default function ProjectsPage() {
     <>
       <PageIntro
         eyebrow="Projects"
-        index="04 / 06"
-        title="Selected projects"
-        description="Selected work ordered by impact and relevance. Each project begins with a problem and ends with something testable."
+        index="05 / 07"
+        title="Projects"
       />
       <section className="site-container mt-16 sm:mt-24">
         <div className="space-y-14 sm:space-y-16">

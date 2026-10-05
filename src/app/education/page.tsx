@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/page-intro";
-import { formatDateRange, sortEducation } from "@/lib/portfolio";
+import { formatDateRange, sortEducation, toAnalyticsId } from "@/lib/portfolio";
 
 export const metadata: Metadata = {
   title: "Education",
@@ -15,13 +15,17 @@ export default function EducationPage() {
     <>
       <PageIntro
         eyebrow="Education"
-        index="03 / 06"
+        index="03 / 07"
         title="Education"
       />
       <section className="site-container mt-16 sm:mt-24">
         <ol className="grid gap-6">
           {items.map((item, index) => (
-            <li key={`${item.institution}-${item.degree}`}>
+            <li
+              key={`${item.institution}-${item.degree}`}
+              id={toAnalyticsId(`${item.institution}-${item.degree}`)}
+              className="scroll-mt-24"
+            >
               <article className="education-card grid gap-8 border border-[var(--line)] p-6 sm:p-9 lg:grid-cols-[0.75fr_1.25fr] lg:gap-14">
                 <div className="flex flex-col justify-between gap-10">
                   <div>

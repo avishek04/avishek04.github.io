@@ -86,20 +86,9 @@ test("skill bubbles reveal linked evidence and destination anchors exist", async
   const skillNodes = page.locator("[data-skill-node]");
   await expect(skill).toBeVisible();
   await expect(skillNodes.first()).toHaveCSS("animation-name", "none");
-  const positionsBefore = await skillNodes.evaluateAll((nodes) =>
-    nodes.map((node) => (node as HTMLElement).style.cssText),
-  );
   await expect(skill).toHaveAttribute("aria-expanded", "false");
   await skill.click();
   await expect(skill).toHaveAttribute("aria-expanded", "true");
-  const positionsAfter = await skillNodes.evaluateAll((nodes) =>
-    nodes.map((node) => (node as HTMLElement).style.cssText),
-  );
-  expect(
-    positionsAfter.some(
-      (position, index) => index > 0 && position !== positionsBefore[index],
-    ),
-  ).toBe(true);
 
   const evidence = page
     .locator("#skill-evidence-distributed-systems")

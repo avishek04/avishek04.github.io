@@ -44,7 +44,7 @@ export function SkillMap({ skills }: SkillMapProps) {
 
   function scheduleClose() {
     cancelScheduledClose();
-    closeTimerRef.current = setTimeout(() => setActiveSkillId(null), 220);
+    closeTimerRef.current = setTimeout(() => setActiveSkillId(null), 900);
   }
 
   useEffect(() => {
@@ -133,6 +133,7 @@ export function SkillMap({ skills }: SkillMapProps) {
             {network.edges.map((edge) => {
               const source = network.nodes[edge.source];
               const target = network.nodes[edge.target];
+              const depth = (source.depth + target.depth) / 2;
               return (
                 <line
                   key={`${edge.source}-${edge.target}`}
@@ -141,6 +142,7 @@ export function SkillMap({ skills }: SkillMapProps) {
                   y1={source.y}
                   x2={target.x}
                   y2={target.y}
+                  opacity={edge.strong ? 0.24 + depth * 0.22 : 0.05 + depth * 0.1}
                   vectorEffect="non-scaling-stroke"
                 />
               );
@@ -173,8 +175,6 @@ export function SkillMap({ skills }: SkillMapProps) {
               const isActive = network.activeIndex === index;
               const colorIndex = skillColorIndexes[index % skillColorIndexes.length];
               const evidenceListId = `skill-evidence-${skill.id}`;
-              const driftX = ((index * 7) % 7) - 3;
-              const driftY = ((index * 11) % 7) - 3;
 
               return (
                 <li
@@ -187,10 +187,8 @@ export function SkillMap({ skills }: SkillMapProps) {
                       "--skill-size": `${node.size}px`,
                       "--skill-color": `var(--skill-color-${colorIndex})`,
                       "--skill-ink": `var(--skill-ink-${colorIndex})`,
-                      "--drift-x": `${driftX}px`,
-                      "--drift-y": `${driftY}px`,
-                      "--drift-duration": `${7 + (index % 4) * 1.15}s`,
-                      "--drift-delay": `${-(index % 6) * 0.9}s`,
+                      "--skill-depth-layer": `${10 + Math.round(node.depth * 20)}`,
+                      "--skill-depth-opacity": `${0.88 + node.depth * 0.12}`,
                     } as CSSProperties
                   }
                   data-skill-node={skill.id}

@@ -6,6 +6,7 @@ export type SkillNetworkNode = {
   index: number;
   x: number;
   y: number;
+  depth: number;
   size: number;
   radius: number;
 };
@@ -25,37 +26,37 @@ export type SkillNetworkEdge = {
 type NormalizedPoint = { x: number; y: number };
 
 const widePlacements: NormalizedPoint[] = [
-  { x: 0.1, y: 0.18 },
-  { x: 0.34, y: 0.12 },
-  { x: 0.61, y: 0.2 },
-  { x: 0.88, y: 0.13 },
-  { x: 0.21, y: 0.4 },
-  { x: 0.49, y: 0.44 },
-  { x: 0.77, y: 0.36 },
-  { x: 0.09, y: 0.65 },
-  { x: 0.35, y: 0.6 },
-  { x: 0.64, y: 0.7 },
-  { x: 0.91, y: 0.59 },
-  { x: 0.22, y: 0.86 },
-  { x: 0.5, y: 0.82 },
-  { x: 0.79, y: 0.89 },
+  { x: 0.25, y: 0.2 },
+  { x: 0.43, y: 0.14 },
+  { x: 0.62, y: 0.22 },
+  { x: 0.78, y: 0.17 },
+  { x: 0.12, y: 0.47 },
+  { x: 0.31, y: 0.53 },
+  { x: 0.51, y: 0.42 },
+  { x: 0.71, y: 0.51 },
+  { x: 0.88, y: 0.45 },
+  { x: 0.07, y: 0.79 },
+  { x: 0.28, y: 0.72 },
+  { x: 0.49, y: 0.86 },
+  { x: 0.7, y: 0.74 },
+  { x: 0.92, y: 0.82 },
 ];
 
 const mediumPlacements: NormalizedPoint[] = [
-  { x: 0.15, y: 0.1 },
-  { x: 0.5, y: 0.08 },
-  { x: 0.84, y: 0.13 },
-  { x: 0.25, y: 0.28 },
-  { x: 0.62, y: 0.25 },
-  { x: 0.87, y: 0.35 },
-  { x: 0.12, y: 0.45 },
-  { x: 0.45, y: 0.47 },
-  { x: 0.8, y: 0.52 },
-  { x: 0.25, y: 0.65 },
-  { x: 0.62, y: 0.67 },
-  { x: 0.88, y: 0.76 },
-  { x: 0.17, y: 0.86 },
-  { x: 0.54, y: 0.89 },
+  { x: 0.25, y: 0.12 },
+  { x: 0.51, y: 0.1 },
+  { x: 0.77, y: 0.16 },
+  { x: 0.13, y: 0.35 },
+  { x: 0.39, y: 0.31 },
+  { x: 0.64, y: 0.4 },
+  { x: 0.87, y: 0.34 },
+  { x: 0.1, y: 0.58 },
+  { x: 0.35, y: 0.54 },
+  { x: 0.63, y: 0.63 },
+  { x: 0.88, y: 0.56 },
+  { x: 0.21, y: 0.83 },
+  { x: 0.5, y: 0.76 },
+  { x: 0.8, y: 0.87 },
 ];
 
 const narrowPlacements: NormalizedPoint[] = [
@@ -90,9 +91,15 @@ function placementsForWidth(width: number): NormalizedPoint[] {
 }
 
 export function skillNetworkStageHeight(width: number): number {
-  if (width < 520) return 1500;
-  if (width < 900) return 1160;
-  return 800;
+  if (width < 520) return 1360;
+  if (width < 900) return 800;
+  return 640;
+}
+
+function perspectiveScale(width: number, depth: number): number {
+  if (width < 520) return 0.92 + depth * 0.12;
+  if (width < 900) return 0.82 + depth * 0.22;
+  return 0.72 + depth * 0.4;
 }
 
 function settleCollisions(
@@ -148,25 +155,28 @@ export function createSkillNetworkLayout(
   const scores = skills.map(skillUsageScore);
   const minimumScore = Math.min(...scores);
   const maximumScore = Math.max(...scores);
-  const scale = width < 520 ? 0.72 : width < 900 ? 0.88 : 1;
+  const scale = width < 520 ? 0.72 : width < 900 ? 0.82 : 1;
   const placements = placementsForWidth(width);
   const nodes = skills.map((skill, index) => {
     const size = skillBubbleSize(skill, minimumScore, maximumScore) * 16 * scale;
     const placement = placements[index % placements.length];
+    const depth = clamp(placement.y, 0, 1);
+    const projectedSize = size * perspectiveScale(width, depth);
 
     return {
       id: skill.id,
       index,
       x: placement.x * width,
       y: placement.y * height,
-      size,
-      radius: size / 2,
+      depth,
+      size: projectedSize,
+      radius: projectedSize / 2,
     };
   });
 
   return {
     height,
-    nodes: settleCollisions(nodes, width, height, width < 520 ? 12 : 20),
+    nodes: settleCollisions(nodes, width, height, width < 520 ? 10 : 14),
   };
 }
 
@@ -176,7 +186,9 @@ export function createSkillEvidenceLayout(
   width: number,
   height: number,
 ): SkillEvidencePosition[] {
-  const evidenceRadius = width < 520 ? 35 : 40;
+  const evidenceRadius =
+    (width < 520 ? 33 : width < 900 ? 36 : 38) *
+    (0.86 + active.depth * 0.16);
   const distance = active.radius + evidenceRadius + (width < 520 ? 12 : 16);
   const edgeClearance = distance + evidenceRadius + 8;
   const hasFullCircleSpace =

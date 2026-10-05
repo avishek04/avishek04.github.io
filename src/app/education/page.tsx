@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OrganizationLink } from "@/components/organization-link";
 import { PageIntro } from "@/components/page-intro";
 import { formatDateRange, sortEducation, toAnalyticsId } from "@/lib/portfolio";
 
@@ -30,7 +31,18 @@ export default function EducationPage() {
                 <div className="flex flex-col justify-between gap-10">
                   <div>
                     <span className="font-mono text-[10px] text-[var(--accent)]">0{index + 1}</span>
-                    <p className="eyebrow mt-7">{item.institution}</p>
+                    <div className="mt-7">
+                      {item.organizationUrl && item.organizationLogo ? (
+                        <OrganizationLink
+                          name={item.institution}
+                          href={item.organizationUrl}
+                          logo={item.organizationLogo}
+                          logoKind={item.organizationLogoKind}
+                        />
+                      ) : (
+                        <p className="eyebrow">{item.institution}</p>
+                      )}
+                    </div>
                     <h2 className="mt-3 font-serif text-3xl leading-tight tracking-[-0.03em] sm:text-4xl">{item.degree}</h2>
                     {item.focus ? <p className="mt-3 text-sm text-[var(--muted)]">{item.focus}</p> : null}
                   </div>

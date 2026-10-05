@@ -85,6 +85,7 @@ test("skill bubbles reveal linked evidence and destination anchors exist", async
   const skill = page.getByTestId("skill-bubble-distributed-systems");
   const skillNodes = page.locator("[data-skill-node]");
   await expect(skill).toBeVisible();
+  await expect(skillNodes.first()).toHaveCSS("animation-name", "none");
   const positionsBefore = await skillNodes.evaluateAll((nodes) =>
     nodes.map((node) => (node as HTMLElement).style.cssText),
   );
@@ -141,7 +142,9 @@ test("explore content is organized into clear sections", async ({ page }) => {
   await page.goto("/explore/");
   await expect(page.getByRole("heading", { name: "Trips" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Blogs" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Interests" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Interests" })).toHaveCount(0);
+  await expect(page.getByText("A living collection")).toHaveCount(0);
+  await expect(page.getByText("More soon.")).toHaveCount(0);
   await expect(
     page.getByRole("heading", {
       name: "LoRA, an efficient approach to fine-tuning a Large Language Model",
@@ -164,6 +167,26 @@ test("explore content is organized into clear sections", async ({ page }) => {
     "href",
     /github\.com/,
   );
+});
+
+test("experience and education organizations have logos and official links", async ({ page }) => {
+  await page.goto("/experience/");
+  const uHealth = page.getByRole("link", { name: "University of Utah Health website" });
+  await expect(uHealth).toHaveAttribute("href", "https://healthcare.utah.edu/");
+  await expect(uHealth.locator("img")).toBeVisible();
+
+  const accenture = page.getByRole("link", { name: "Accenture website" }).first();
+  await expect(accenture).toHaveAttribute("href", "https://www.accenture.com/");
+  await expect(accenture.locator("img")).toBeVisible();
+
+  await page.goto("/education/");
+  const university = page.getByRole("link", { name: "University of Utah website" }).first();
+  await expect(university).toHaveAttribute("href", "https://www.utah.edu/");
+  await expect(university.locator("img")).toBeVisible();
+
+  const bmsce = page.getByRole("link", { name: "B.M.S. College of Engineering website" });
+  await expect(bmsce).toHaveAttribute("href", "https://www.bmsce.ac.in/");
+  await expect(bmsce.locator("img")).toBeVisible();
 });
 
 test("education uses the requested degree and GPA wording", async ({ page }) => {

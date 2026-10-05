@@ -49,6 +49,9 @@ export type SiteProfile = {
 
 export type ExperienceItem = {
   company: string;
+  organizationUrl?: string;
+  organizationLogo?: string;
+  organizationLogoKind?: "wordmark" | "symbol" | "cropped-symbol";
   role: string;
   startDate: string;
   endDate?: string;
@@ -61,6 +64,9 @@ export type ExperienceItem = {
 
 export type EducationItem = {
   institution: string;
+  organizationUrl?: string;
+  organizationLogo?: string;
+  organizationLogoKind?: "wordmark" | "symbol" | "cropped-symbol";
   degree: string;
   startDate: string;
   endDate?: string;
@@ -103,7 +109,7 @@ export type SkillMapItem = {
 
 export type ExploreItem = {
   title: string;
-  section: "Trips" | "Blogs" | "Interests";
+  section: "Trips" | "Blogs";
   category: string;
   description: string;
   image?: string;
@@ -161,7 +167,7 @@ export const profile: SiteProfile = {
     "I started as a self-taught programmer, and that beginner’s curiosity still shapes how I work. I like asking the simple questions, listening closely to the people who use a system, and finding the clearest path through a complicated problem.",
     "When I’m away from the keyboard, you’ll usually find me hiking around Utah, experimenting in the kitchen, taking photographs, or strength training. Those pursuits keep me observant, patient, and ready to learn something new.",
   ],
-  location: "Salt Lake City, UT",
+  location: "Salt Lake City, UT, US",
   availability: "Open to software engineering opportunities across the United States.",
   email: "choudhury.avishek96@gmail.com",
   additionalEmails: ["avishekchoudhury04@gmail.com"],
@@ -226,13 +232,13 @@ export const profile: SiteProfile = {
   ],
   privacy: {
     summary:
-      "I use a small, self-managed analytics service to understand which pages and portfolio entries are useful to visitors.",
+      "A small, self-managed analytics service helps me understand which portfolio content is useful.",
     collected:
-      "It records the page path, referring website hostname, time spent on experience and project entries, project source-link clicks, a random per-tab session identifier, and an approximate city, region, and country supplied by Cloudflare.",
+      "Page paths, external referrers, dwell time, project link clicks, a random per-tab ID, and an approximate city, region, and country supplied by Cloudflare.",
     protections:
-      "It does not use cookies, advertising trackers, browser fingerprinting, or GPS, and it does not store raw IP addresses in the analytics database or application logs. Cloudflare uses the connection address transiently to enforce an abuse-prevention rate limit.",
+      "It does not use cookies, ads, fingerprinting, or GPS, and stores no raw IP addresses. Cloudflare uses the connection address transiently for rate limiting.",
     retention:
-      "Raw events are retained for 30 days and then deleted after daily aggregate summaries are created. Tracking is disabled when the browser sends Global Privacy Control or Do Not Track.",
+      "Raw events are retained for 30 days, then deleted after daily aggregation. Global Privacy Control or Do Not Track disables collection.",
   },
   seo: {
     title: "Avishek Choudhury — Software Engineer",
@@ -244,6 +250,9 @@ export const profile: SiteProfile = {
 export const experience: ExperienceItem[] = [
   {
     company: "University of Utah Health",
+    organizationUrl: "https://healthcare.utah.edu/",
+    organizationLogo: "/images/organizations/uhealth.svg",
+    organizationLogoKind: "wordmark",
     role: "Software Engineer",
     startDate: "2025-12",
     current: true,
@@ -259,6 +268,9 @@ export const experience: ExperienceItem[] = [
   },
   {
     company: "University of Utah",
+    organizationUrl: "https://www.utah.edu/",
+    organizationLogo: "/images/organizations/university-of-utah-block-u.svg",
+    organizationLogoKind: "symbol",
     role: "Teaching Assistant and Researcher",
     startDate: "2023-08",
     endDate: "2025-05",
@@ -272,6 +284,9 @@ export const experience: ExperienceItem[] = [
   },
   {
     company: "University of Utah",
+    organizationUrl: "https://www.utah.edu/",
+    organizationLogo: "/images/organizations/university-of-utah-block-u.svg",
+    organizationLogoKind: "symbol",
     role: "Software Development Intern",
     startDate: "2023-01",
     endDate: "2023-08",
@@ -284,6 +299,9 @@ export const experience: ExperienceItem[] = [
   },
   {
     company: "Accenture",
+    organizationUrl: "https://www.accenture.com/",
+    organizationLogo: "/images/organizations/accenture.svg",
+    organizationLogoKind: "symbol",
     role: "Senior Software Engineer",
     startDate: "2021-11",
     endDate: "2022-07",
@@ -297,6 +315,9 @@ export const experience: ExperienceItem[] = [
   },
   {
     company: "Accenture",
+    organizationUrl: "https://www.accenture.com/",
+    organizationLogo: "/images/organizations/accenture.svg",
+    organizationLogoKind: "symbol",
     role: "Software Engineer",
     startDate: "2020-11",
     endDate: "2021-11",
@@ -309,6 +330,9 @@ export const experience: ExperienceItem[] = [
   },
   {
     company: "Accenture",
+    organizationUrl: "https://www.accenture.com/",
+    organizationLogo: "/images/organizations/accenture.svg",
+    organizationLogoKind: "symbol",
     role: "Associate Software Engineer",
     startDate: "2018-11",
     endDate: "2020-11",
@@ -323,6 +347,9 @@ export const experience: ExperienceItem[] = [
 export const education: EducationItem[] = [
   {
     institution: "University of Utah",
+    organizationUrl: "https://www.utah.edu/",
+    organizationLogo: "/images/organizations/university-of-utah-block-u.svg",
+    organizationLogoKind: "symbol",
     degree: "M.S. in Computing",
     focus: "With Specialization in AI",
     startDate: "2023-08",
@@ -345,6 +372,9 @@ export const education: EducationItem[] = [
   },
   {
     institution: "University of Utah",
+    organizationUrl: "https://www.utah.edu/",
+    organizationLogo: "/images/organizations/university-of-utah-block-u.svg",
+    organizationLogoKind: "symbol",
     degree: "Master of Software Development",
     startDate: "2022-08",
     endDate: "2023-04",
@@ -360,6 +390,9 @@ export const education: EducationItem[] = [
   },
   {
     institution: "B.M.S. College of Engineering",
+    organizationUrl: "https://www.bmsce.ac.in/",
+    organizationLogo: "/images/organizations/bmsce.jpg",
+    organizationLogoKind: "cropped-symbol",
     degree: "Bachelor of Engineering",
     startDate: "2014-08",
     endDate: "2018-04",
@@ -908,27 +941,6 @@ export const explore: ExploreItem[] = [
       },
     ],
   },
-  {
-    title: "Cooking as iteration",
-    section: "Interests",
-    category: "Cooking",
-    description:
-      "I enjoy the loop of learning a technique, tasting the result, and adjusting. It is creative work with immediate and honest feedback.",
-  },
-  {
-    title: "Learning to notice",
-    section: "Interests",
-    category: "Photography",
-    description:
-      "Photography is a practice in paying attention—to light, proportion, ordinary details, and the stories that appear when I slow down.",
-  },
-  {
-    title: "The value of consistency",
-    section: "Interests",
-    category: "Strength training",
-    description:
-      "Training keeps me grounded in patient, repeatable progress. Small improvements compound when the fundamentals stay sound.",
-  },
 ];
 
 export const exploreSections: Array<{
@@ -942,9 +954,5 @@ export const exploreSections: Array<{
   {
     title: "Blogs",
     description: "Technical notes and reflections on software, systems, artificial intelligence, and the process of learning.",
-  },
-  {
-    title: "Interests",
-    description: "The practices outside engineering that keep me curious, patient, creative, and consistent.",
   },
 ];

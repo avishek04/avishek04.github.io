@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OrganizationLink } from "@/components/organization-link";
 import { PageIntro } from "@/components/page-intro";
 import { formatDateRange, sortExperience, toAnalyticsId } from "@/lib/portfolio";
 
@@ -37,7 +38,16 @@ export default function ExperiencePage() {
                 {item.location ? <p className="mt-2 text-xs text-[var(--muted)]">{item.location}</p> : null}
               </div>
               <article>
-                <p className="text-sm font-semibold tracking-[0.06em] text-[var(--ink)] uppercase">{item.company}</p>
+                {item.organizationUrl && item.organizationLogo ? (
+                  <OrganizationLink
+                    name={item.company}
+                    href={item.organizationUrl}
+                    logo={item.organizationLogo}
+                    logoKind={item.organizationLogoKind}
+                  />
+                ) : (
+                  <p className="text-sm font-semibold tracking-[0.06em] text-[var(--ink)] uppercase">{item.company}</p>
+                )}
                 <h2 className="mt-3 font-serif text-3xl tracking-[-0.03em] sm:text-5xl">{item.role}</h2>
                 {item.note ? <p className="mt-4 max-w-2xl text-sm italic leading-6 text-[var(--muted)]">{item.note}</p> : null}
                 <ul className="mt-8 space-y-4">

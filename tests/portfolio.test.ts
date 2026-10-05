@@ -126,13 +126,33 @@ test("skill network forms a connected mesh inside its stage", () => {
   const edges = createSkillNetworkEdges(nodes);
 
   assert.equal(nodes.length, skillMap.length);
+  assert.ok(height < 1152, "desktop skill network should be horizontally oriented");
   assert.equal(edges.length, (nodes.length * (nodes.length - 1)) / 2);
   for (const node of nodes) {
+    assert.ok(node.depth >= 0 && node.depth <= 1);
     assert.ok(node.x - node.radius >= 0);
     assert.ok(node.x + node.radius <= 1152);
     assert.ok(node.y - node.radius >= 0);
     assert.ok(node.y + node.radius <= height);
   }
+});
+
+test("skill network perspective makes equally weighted foreground nodes larger", () => {
+  const equalWeightSkills = skillMap.map((skill, index) => ({
+    ...skill,
+    id: `${skill.id}-${index}`,
+    evidence: skillMap[0].evidence,
+  }));
+  const { nodes } = createSkillNetworkLayout(equalWeightSkills, 1152);
+  const farthest = nodes.reduce((current, node) =>
+    node.depth < current.depth ? node : current,
+  );
+  const nearest = nodes.reduce((current, node) =>
+    node.depth > current.depth ? node : current,
+  );
+
+  assert.ok(nearest.depth > farthest.depth);
+  assert.ok(nearest.size > farthest.size);
 });
 
 test("expanded evidence displaces neighboring skill nodes", () => {

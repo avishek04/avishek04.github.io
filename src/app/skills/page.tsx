@@ -16,38 +16,19 @@ export default function SkillsPage() {
   return (
     <>
       <PageIntro eyebrow="Skills" index="04 / 07" title="Skills" />
-      <section className="site-container mt-12 sm:mt-16" aria-labelledby="skill-map-title">
-        <div className="grid gap-8 border-y border-[var(--line)] py-7 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
-          <div>
-            <h2 id="skill-map-title" className="font-serif text-2xl tracking-[-0.025em] sm:text-3xl">
-              Experience behind the tools
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--muted)]">
-              A living network of the tools and ideas that recur across my work. Hover, focus, or tap a skill to reveal its supporting roles, projects, and coursework; nearby skills move aside as that evidence enters the network.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] text-[var(--muted)]" aria-label="Evidence weights">
-            <span><strong className="text-[var(--ink)]">4</strong> Experience</span>
-            <span><strong className="text-[var(--ink)]">2</strong> Project</span>
-            <span><strong className="text-[var(--ink)]">1</strong> Course</span>
-          </div>
-        </div>
-
-        <p className="mt-6 max-w-3xl text-xs leading-6 text-[var(--muted)]">
-          Bubble size reflects the weighted evidence above, while color helps separate neighboring nodes. It is a record of documented use—not a subjective proficiency rating.
+      <section className="site-container mt-8 sm:mt-10" aria-labelledby="skill-map-title">
+        <h2 id="skill-map-title" className="sr-only">
+          Experience behind the tools
+        </h2>
+        <SkillMap skills={skillMap} />
+        <p className="mt-6 ml-auto max-w-xl text-right text-xs leading-6 text-[var(--muted)]">
+          Bubble size reflects the weighted evidence for a skill. Hover, focus, or tap a skill to reveal its supporting roles, projects, and coursework. Then click on the popped-up bubble to go to the content for further context.
         </p>
-
-        <div className="mt-4">
-          <SkillMap skills={skillMap} />
-        </div>
       </section>
 
       <section className="site-container mt-20 sm:mt-24" aria-labelledby="evidence-index-title">
         <div className="section-heading">
           <h2 id="evidence-index-title" className="section-title">Evidence index</h2>
-          <p className="max-w-md text-sm leading-6 text-[var(--muted)]">
-            The same connections in a compact list for quick scanning.
-          </p>
         </div>
         <div className="mt-6 grid gap-x-10 md:grid-cols-2">
           {skillMap.map((skill) => (

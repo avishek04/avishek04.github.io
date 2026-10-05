@@ -19,7 +19,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         index="07 / 07"
         title="Let’s connect"
-        description="If you are hiring, building something ambitious, or want to compare notes on systems and applied AI, I would be glad to hear from you."
+        description="If you are hiring or building something ambitious, I would be glad to hear from you."
       />
       <section className="site-container mt-16 sm:mt-24">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-20">
@@ -83,36 +83,35 @@ export default function ContactPage() {
         </div>
 
         <aside
-          className="mt-20 grid gap-8 border-y border-[var(--line)] py-8 sm:py-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-14"
+          className="mt-14 border-t border-[var(--line)] py-4 text-[11px] leading-[1.45] text-[var(--muted)]"
           aria-labelledby="privacy-analytics-title"
         >
-          <div>
-            <p className="eyebrow">Privacy</p>
-            <h2
-              id="privacy-analytics-title"
-              className="mt-3 font-serif text-3xl tracking-[-0.03em] sm:text-4xl"
-            >
-              Privacy &amp; analytics
-            </h2>
-            <p className="mt-4 max-w-md text-sm leading-6 text-[var(--muted)]">
-              {profile.privacy.summary}
-            </p>
-          </div>
+          <div className="grid gap-3 lg:grid-cols-[0.55fr_1.45fr] lg:gap-8">
+            <div>
+              <h2
+                id="privacy-analytics-title"
+                className="font-medium tracking-[0.08em] text-[var(--ink)] uppercase"
+              >
+                Privacy &amp; analytics
+              </h2>
+              <p className="mt-1 max-w-sm">{profile.privacy.summary}</p>
+            </div>
 
-          <ul className="space-y-5 text-sm leading-7 text-[var(--muted)]">
-            <li>
-              <span className="font-semibold text-[var(--ink)]">What is collected: </span>
-              {profile.privacy.collected}
-            </li>
-            <li>
-              <span className="font-semibold text-[var(--ink)]">What is not collected: </span>
-              {profile.privacy.protections}
-            </li>
-            <li>
-              <span className="font-semibold text-[var(--ink)]">Retention and controls: </span>
-              {profile.privacy.retention}
-            </li>
-          </ul>
+            <ul className="grid gap-2 sm:grid-cols-3 sm:gap-4">
+              <li>
+                <span className="font-semibold text-[var(--ink)]">What is collected: </span>
+                {profile.privacy.collected}
+              </li>
+              <li>
+                <span className="font-semibold text-[var(--ink)]">What is not collected: </span>
+                {profile.privacy.protections}
+              </li>
+              <li>
+                <span className="font-semibold text-[var(--ink)]">Retention and controls: </span>
+                {profile.privacy.retention}
+              </li>
+            </ul>
+          </div>
         </aside>
       </section>
     </>

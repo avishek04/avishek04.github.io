@@ -91,7 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <Header />
-        <main id="main-content">{children}</main>
+        <main id="main-content" className="pb-20 sm:pb-28 lg:pb-32">{children}</main>
         <AnalyticsTracker />
       </body>
     </html>

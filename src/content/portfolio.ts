@@ -296,7 +296,7 @@ export const experience: ExperienceItem[] = [
       "Expanded the consumer base by 10% by designing a product recommendation system for an e-commerce platform in partnership with the sales team.",
       "Improved click-through rates and campaign effectiveness by 20% by analyzing user traffic and optimizing the ad-placement strategy.",
     ],
-    technologies: ["Python", "PyTorch", "Apache Spark", "Google Analytics", "PostgreSQL"],
+    technologies: ["Python", "Vue.js", "PyTorch", "Spark", "Google Analytics", "PostgreSQL"],
   },
   {
     company: "Accenture",

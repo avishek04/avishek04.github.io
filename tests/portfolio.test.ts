@@ -11,7 +11,14 @@ import {
   type SkillMapItem,
 } from "../src/content/portfolio";
 import { externalReferrerHostname } from "../src/lib/analytics";
-import { formatDateRange, sortEducation, sortExperience, sortProjects, toAnalyticsId } from "../src/lib/portfolio";
+import {
+  formatDateRange,
+  groupProjectsByDomain,
+  sortEducation,
+  sortExperience,
+  sortProjects,
+  toAnalyticsId,
+} from "../src/lib/portfolio";
 import {
   createSkillEvidenceLayout,
   createSkillNetworkEdges,
@@ -22,12 +29,29 @@ import { skillBubbleSize, skillUsageScore } from "../src/lib/skills";
 
 test("projects sort by priority and then descending year", () => {
   const items: ProjectItem[] = [
-    { title: "Older", category: "Test", summary: "", technologies: [], priority: 10, featured: false, year: 2022 },
-    { title: "High priority", category: "Test", summary: "", technologies: [], priority: 20, featured: false, year: 2020 },
-    { title: "Newer", category: "Test", summary: "", technologies: [], priority: 10, featured: false, year: 2025 },
+    { title: "Older", domain: "Systems & networking", category: "Test", summary: "", technologies: [], priority: 10, featured: false, year: 2022 },
+    { title: "High priority", domain: "AI & machine learning", category: "Test", summary: "", technologies: [], priority: 20, featured: false, year: 2020 },
+    { title: "Newer", domain: "Systems & networking", category: "Test", summary: "", technologies: [], priority: 10, featured: false, year: 2025 },
   ];
 
   assert.deepEqual(sortProjects(items).map((item) => item.title), ["High priority", "Newer", "Older"]);
+});
+
+test("projects group into technology domains and preserve priority within each domain", () => {
+  const sortedProjects = sortProjects();
+  const groups = groupProjectsByDomain(sortedProjects);
+
+  assert.deepEqual(
+    groups.map((group) => group.domain),
+    ["AI & machine learning", "Distributed & backend", "Full-stack & data", "Systems & networking"],
+  );
+  for (const group of groups) {
+    assert.deepEqual(
+      group.projects,
+      sortedProjects.filter((project) => project.domain === group.domain),
+    );
+  }
+  assert.equal(groups.reduce((count, group) => count + group.projects.length, 0), sortedProjects.length);
 });
 
 test("experience sorts by most recent confirmed date", () => {

@@ -79,6 +79,7 @@ export type EducationItem = {
 
 export type ProjectItem = {
   title: string;
+  domain: "AI & machine learning" | "Distributed & backend" | "Full-stack & data" | "Systems & networking";
   category: string;
   summary: string;
   impact?: string;
@@ -397,7 +398,7 @@ export const education: EducationItem[] = [
     startDate: "2014-08",
     endDate: "2018-04",
     location: "Bengaluru, India",
-    gpa: "3.0 / 4.0",
+    gpa: "3.4 / 4.0",
   },
 ];
 
@@ -773,6 +774,7 @@ export const skillMap: SkillMapItem[] = [
 export const projects: ProjectItem[] = [
   {
     title: "MedLam",
+    domain: "AI & machine learning",
     category: "Applied AI",
     summary:
       "A medical question-answering language model fine-tuned with LoRA and PEFT over a 100,000-record data pipeline.",
@@ -786,6 +788,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Replicated key-value store",
+    domain: "Distributed & backend",
     category: "Distributed systems",
     summary:
       "A fault-tolerant key-value store implementing Raft leader election, persistent log replication, state recovery, and strong consistency.",
@@ -799,6 +802,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Real-time group chat server",
+    domain: "Distributed & backend",
     category: "Backend engineering",
     summary:
       "A multi-client server using WebSockets and multithreading to coordinate concurrent group conversations.",
@@ -812,6 +816,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Trajectory Generation BERT",
+    domain: "AI & machine learning",
     category: "Machine learning",
     summary:
       "A trajectory-imputation framework that treats missing GPS coordinates like missing words and uses BERT to generate plausible paths without a dense road network.",
@@ -824,6 +829,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "COVID-19 Information Hub",
+    domain: "Full-stack & data",
     category: "Full-stack",
     summary:
       "A public information portal combining global news, social data, and large daily datasets into accessible charts and tables.",
@@ -836,6 +842,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "70 Years of Music",
+    domain: "Full-stack & data",
     category: "Data visualization",
     summary:
       "An interactive exploration of how popular music, genres, audio attributes, and lyrical patterns changed from 1950 to 2019.",
@@ -848,6 +855,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Unix shell",
+    domain: "Systems & networking",
     category: "Operating systems",
     summary:
       "A compact command-line shell supporting command execution, input/output redirection, and pipelines familiar from Bash and Zsh.",
@@ -860,6 +868,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Caching DNS resolver",
+    domain: "Systems & networking",
     category: "Computer networking",
     summary:
       "A multithreaded Java DNS resolver that caches earlier responses to accelerate repeated domain requests.",
@@ -872,6 +881,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "MSD Script interpreter",
+    domain: "Systems & networking",
     category: "Language implementation",
     summary:
       "An interpreter for a case-sensitive scripting language with expressions, variable bindings, and function definition and invocation.",
@@ -884,6 +894,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Face recognition web app",
+    domain: "AI & machine learning",
     category: "Full-stack & ML",
     summary:
       "An authenticated web application that locates faces in submitted images and tracks each user's request history.",
@@ -896,6 +907,7 @@ export const projects: ProjectItem[] = [
   },
   {
     title: "Machine-learning library",
+    domain: "AI & machine learning",
     category: "Machine learning",
     summary:
       "A from-scratch collection of classical models including decision trees, ensembles, perceptrons, support-vector machines, logistic regression, and neural networks.",

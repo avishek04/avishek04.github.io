@@ -44,6 +44,24 @@ test("mobile navigation opens and reaches the projects page", async ({ page, isM
   await expect(page).toHaveURL(/\/projects\/$/);
 });
 
+test("project domain navigation reveals projects and jumps to a project", async ({ page }) => {
+  await page.goto("/projects/");
+  const navigation = page.getByRole("navigation", {
+    name: "Browse projects by technology domain",
+  });
+  const domain = navigation.getByRole("button", { name: /AI & machine learning/i });
+
+  await expect(domain).toHaveAttribute("aria-expanded", "false");
+  await domain.click();
+  await expect(domain).toHaveAttribute("aria-expanded", "true");
+
+  const projectLink = navigation.getByRole("link", { name: "MedLam", exact: true });
+  await expect(projectLink).toBeVisible();
+  await projectLink.click();
+  await expect(page).toHaveURL(/\/projects\/#medlam$/);
+  await expect(page.locator("#medlam")).toBeInViewport();
+});
+
 test("contact actions expose email, copy feedback, and safe external links", async ({ page, context }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/contact/");
@@ -129,7 +147,7 @@ test("resume is discoverable from the homepage", async ({ page }) => {
 
 test("explore content is organized into clear sections", async ({ page }) => {
   await page.goto("/explore/");
-  await expect(page.getByRole("heading", { name: "Trips" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Trips" })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Blogs" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Interests" })).toHaveCount(0);
   await expect(page.getByText("A living collection")).toHaveCount(0);
@@ -181,7 +199,7 @@ test("experience and education organizations have logos and official links", asy
 test("education uses the requested degree and GPA wording", async ({ page }) => {
   await page.goto("/education/");
   await expect(page.getByText("With Specialization in AI")).toBeVisible();
-  await expect(page.getByText("GPA 3.0 / 4.0", { exact: true })).toBeVisible();
+  await expect(page.getByText("GPA 3.4 / 4.0", { exact: true })).toBeVisible();
   await expect(page.getByText(/converted from 7\.5 \/ 10/i)).toHaveCount(0);
 });
 

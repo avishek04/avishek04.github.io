@@ -50,6 +50,23 @@ export function sortProjects(items: ProjectItem[] = projects): ProjectItem[] {
   return [...items].sort((a, b) => b.priority - a.priority || (b.year ?? 0) - (a.year ?? 0));
 }
 
+export function groupProjectsByDomain(items: ProjectItem[] = sortProjects()) {
+  return items.reduce<Array<{ domain: ProjectItem["domain"]; projects: ProjectItem[] }>>(
+    (groups, project) => {
+      const group = groups.find((candidate) => candidate.domain === project.domain);
+
+      if (group) {
+        group.projects.push(project);
+      } else {
+        groups.push({ domain: project.domain, projects: [project] });
+      }
+
+      return groups;
+    },
+    [],
+  );
+}
+
 export function featuredProjects(limit = 3): ProjectItem[] {
   return sortProjects().filter((project) => project.featured).slice(0, limit);
 }

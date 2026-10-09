@@ -205,6 +205,7 @@ test("education uses the requested degree and GPA wording", async ({ page }) => 
 
 test("home narrative links to the organizations and professor it mentions", async ({ page }) => {
   await page.goto("/");
+  await expect(page.getByRole("heading", { name: "How I work" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "University of Utah Health" })).toHaveAttribute(
     "href",
     "https://healthcare.utah.edu/",

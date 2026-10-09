@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+// Keep the section content available until it is ready to publish again.
+const SHOW_HOW_I_WORK = false;
+
 export default function HomePage() {
   const personSchema = {
     "@context": "https://schema.org",
@@ -121,26 +124,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="site-container section-block">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Approach</p>
-            <h2 className="section-title mt-3">How I work</h2>
+      {SHOW_HOW_I_WORK ? (
+        <section className="site-container section-block">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Approach</p>
+              <h2 className="section-title mt-3">How I work</h2>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-[var(--muted)]">
+              Good engineering starts with shared context and ends with software that people can confidently use, operate, and improve.
+            </p>
           </div>
-          <p className="max-w-md text-sm leading-6 text-[var(--muted)]">
-            Good engineering starts with shared context and ends with software that people can confidently use, operate, and improve.
-          </p>
-        </div>
-        <ol className="mt-7 grid border-t border-l border-[var(--line)] md:grid-cols-3">
-          {profile.workPrinciples.map((principle, index) => (
-            <li key={principle.title} className="border-r border-b border-[var(--line)] p-5 sm:p-6">
-              <span className="font-mono text-[10px] text-[var(--accent)]">0{index + 1}</span>
-              <h3 className="mt-5 font-serif text-2xl tracking-[-0.025em]">{principle.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{principle.description}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+          <ol className="mt-7 grid border-t border-l border-[var(--line)] md:grid-cols-3">
+            {profile.workPrinciples.map((principle, index) => (
+              <li key={principle.title} className="border-r border-b border-[var(--line)] p-5 sm:p-6">
+                <span className="font-mono text-[10px] text-[var(--accent)]">0{index + 1}</span>
+                <h3 className="mt-5 font-serif text-2xl tracking-[-0.025em]">{principle.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{principle.description}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ) : null}
       <Footer />
     </>
   );

@@ -55,9 +55,6 @@ export default function ExperiencePage() {
                     <li key={highlight} className="highlight-item">{highlight}</li>
                   ))}
                 </ul>
-                <ul className="mt-8 flex flex-wrap gap-2" aria-label="Technologies used">
-                  {item.technologies.map((technology) => <li key={technology} className="tag">{technology}</li>)}
-                </ul>
               </article>
             </li>
           ))}

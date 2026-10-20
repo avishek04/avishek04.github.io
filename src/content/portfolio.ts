@@ -134,11 +134,11 @@ export const profile: SiteProfile = {
         href: "https://healthcare.utah.edu/",
       },
       {
-        text: ", where I build intelligent systems that help clinicians and researchers reach the information they need, support more informed decisions, and streamline workflows across one of the Mountain West’s leading academic health systems. I currently own three projects: an identity and session platform spanning 8+ distributed services; a RAG pipeline that maps entities and relationships across 1,000+ SQL tables using Qdrant vector search; and an LLM-based SQL platform that provides conversational access to large healthcare datasets. Together, these systems are designed to absorb traffic bursts of 2,000+ requests per second and have reduced clinical research effort by 20%.",
+        text: ", where I build intelligent software that simplifies clinical and administrative workflows. My work includes designing scalable infrastructure for distributed applications, alongside data infrastructure for managing large volumes of structured and unstructured healthcare data. As a full-stack engineer, I also build products from backend services to intuitive user interfaces, integrating AI through retrieval-augmented generation (RAG) and Model Context Protocol (MCP) servers to help people access information and work more efficiently.",
       },
     ],
     [
-      { text: "Before this role, I completed an M.S. in Computing with a specialization in Artificial Intelligence at the " },
+      { text: "Before this role, I completed an M.S. in Computer Science with a specialization in Artificial Intelligence at the " },
       {
         text: "University of Utah",
         href: "https://www.utah.edu/",
@@ -149,7 +149,14 @@ export const profile: SiteProfile = {
         href: "https://users.cs.utah.edu/~zhe/",
       },
       {
-        text: ", I contributed to applied large-language-model research and open-sourced MedLam, a medical question-answering model that reached 5,000+ downloads on Hugging Face. As a teaching assistant for Operating Systems and Database Systems, I mentored more than 50 graduate students through code reviews, systems concepts, and difficult debugging problems. Coursework in distributed systems, graduate algorithms, machine learning, natural language processing, computer vision, and artificial intelligence gave me the theoretical foundation to complement the systems I enjoy building.",
+        text: ", I contributed to applied large-language-model research and open-sourced ",
+      },
+      {
+        text: "MedLam",
+        href: "https://huggingface.co/aviici4cs/MedLam",
+      },
+      {
+        text: ", a medical question-answering model that reached 5,000+ downloads on Hugging Face. As a Teaching Assistant for Operating Systems and Database Systems, I mentored more than 50+ graduate students on Operating Systems and Database Systems. Coursework in distributed systems, graduate algorithms, machine learning, natural language processing, computer vision, and artificial intelligence gave me the theoretical foundation to complement the systems I enjoy building.",
       },
     ],
     [
@@ -159,7 +166,7 @@ export const profile: SiteProfile = {
         href: "https://www.accenture.com/",
       },
       {
-        text: ", progressing from Associate Software Engineer to Senior Software Engineer. I built responsive product experiences, improved API response times by 30%, designed fault-tolerant messaging that processed 5,000+ events per second, and helped deliver a UK project expected to generate $1.2 million in revenue. That progression taught me how to move from solving an assigned problem to owning the outcome—understanding the business need, making the technical trade-offs clear, and carrying a system through delivery.",
+        text: ", progressing from Associate Software Engineer to Senior Software Engineer in a finance project. I designed state of the art products for users to have flawless experience, built secure and scalable REST APIs, and designed fault-tolerant distributed messaging systems. In my final stint I delivered a project, generating over $1.2 million in revenue. That progression taught me how to move from solving an assigned problem to owning the outcome, understanding the business need, making the technical trade-offs clear, and carrying a system through delivery.",
       },
     ],
   ],
@@ -260,10 +267,11 @@ export const experience: ExperienceItem[] = [
     location: "Salt Lake City, UT",
     note: "Building distributed healthcare systems and AI-assisted workflows.",
     highlights: [
-      "Centralized authentication and session management across 8+ distributed services by integrating OpenID Connect at the API gateway.",
-      "Automated entity and relationship discovery across 1,000+ SQL tables by architecting a RAG pipeline with vector search and context retrieval.",
-      "Scaled and secured a RAG platform with caching, rate limiting, and asynchronous queuing to absorb traffic bursts of 2,000+ requests per second.",
-      "Reduced clinical research effort by 20% by building an LLM-based SQL platform that provides conversational access to large-scale healthcare datasets.",
+      "Owned the development of a secure, fault-tolerant payment system, processing over 10K statements valued $10M+ with a 99.8% success rate.",
+      "Centralized authentication and session management across 8+ distributed services by integrating OpenID Connect (OIDC) on the API Gateway.",
+      "Automated entity and relationship discovery across 1K+ SQL tables by architecting a RAG pipeline using vector search and context retrieval.",
+      "Reduced clinical research effort by 20% by building an LLM based SQL platform, giving conversational access to large-scale healthcare datasets.",
+      "Scaled and secured the platform by building an API Gateway with caching and rate limiting, and queue to absorb traffic bursts of 2K+ RPS.",
     ],
     technologies: ["C#", ".NET", "REST APIs", "Redis", "RabbitMQ", "Azure DevOps", "SQL", "NoSQL", "Qdrant", "OpenAI API", "OIDC", "JWT", "React"],
   },

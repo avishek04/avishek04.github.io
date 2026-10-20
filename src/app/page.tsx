@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/footer";
-import { ArrowRightIcon, ArrowUpRightIcon, DownloadIcon } from "@/components/icons";
+import { ArrowRightIcon, DownloadIcon } from "@/components/icons";
 import { profile } from "@/content/portfolio";
 
 export const metadata: Metadata = {
@@ -101,27 +101,6 @@ export default function HomePage() {
           </aside>
         </div>
 
-      </section>
-
-      <section className="site-container section-block">
-        <div className="grid gap-7 border-y border-[var(--line)] py-8 sm:py-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-14">
-          <div>
-            <p className="eyebrow">About</p>
-            <h2 className="section-title mt-3">A little about me</h2>
-          </div>
-          <div>
-            {profile.biography.map((paragraph, index) => (
-              <p key={paragraph} className={`${index ? "mt-5" : ""} max-w-2xl text-base leading-7 text-[var(--muted)]`}>
-                {paragraph}
-              </p>
-            ))}
-            <div className="mt-6">
-              <Link href="/explore/" className="text-link">
-                Outside of work <ArrowUpRightIcon className="size-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
       </section>
 
       {SHOW_HOW_I_WORK ? (
